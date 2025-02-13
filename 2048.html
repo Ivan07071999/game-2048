@@ -8,6 +8,24 @@
     <link rel="stylesheet" href="2048.css">
 </head>
 <body>
+    <div class="name">
+        <h1 class="nameGame">2048</h1>
+        <div class="score">
+            <p>Score</p>
+            <p class="value">0</p>
+        </div>
+    </div>
+
+    <div class="game_over gmHidden">
+        <h1>Defeat</h1>
+        <button class="tryAgain">Try again</button>
+    </div>
+
+    <div class="win winHidden">
+        <h1>Victory</h1>
+        <button class="play">Play</button>
+    </div>
+    
     <canvas id="canvas" ></canvas>
     <script src="2048.js"></script>
 </body>

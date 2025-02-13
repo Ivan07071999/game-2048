@@ -3,13 +3,73 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #faf8ef;
+    background-color: #cdc1b4;
     font-family: Arial, sans-serif;
     overflow: hidden;
+    flex-direction: column;
 }
 
 #canvas {
-    /* width: 400px;
-    height: 400px; */
+
     border: 2px solid black;
+}
+
+.name {
+    width: 400px;
+ display: flex;
+ justify-content: space-between;
+}
+
+.game_over {
+    width: 300px;
+    height: 200px;
+    background-color: burlywood;
+    position: absolute;
+    border-radius: 20px;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px black;
+    
+}
+
+.tryAgain {
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    background-color: #cdc1b4;
+    cursor: pointer;
+}
+
+.gmHidden {
+    visibility: hidden;
+    
+}
+
+.win {
+    width: 300px;
+    height: 200px;
+    background-color: burlywood;
+    position: absolute;
+    border-radius: 20px;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px black;
+}
+
+.winHidden {
+    visibility: hidden;
+}
+
+.play {
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    background-color: #cdc1b4;
+    cursor: pointer;
 }
