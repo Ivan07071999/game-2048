@@ -19,7 +19,18 @@ body {
  display: flex;
  justify-content: space-between;
 }
-
+.score {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    gap: 10px;
+}
+p {
+    margin: 0;
+}
 .game_over {
     width: 300px;
     height: 200px;

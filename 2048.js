@@ -152,8 +152,8 @@ function getColor(gridValue) {
        let newRow = currentRow.filter(value => value !== null)
         for(let i = 0; i < newRow.length - 1; i++) {
             if(newRow[i] === newRow[i+1]) {
-                newRow[i] *= 2
                 points += newRow[i] *= 2
+              //  let newPoint = points += newRow[i] *= 2
                 newRow.splice(i + 1, 1)
             }
         }
@@ -181,8 +181,9 @@ function getColor(gridValue) {
        newRow.reverse()
         for(let i = 0; i < newRow.length - 1; i++) {
             if(newRow[i] === newRow[i+1]) {
-                newRow[i] *= 2
-                points += newRow[i] *2
+                //newRow[i] *= 2
+                let value = newRow[i] *= 2
+                points += value
 
                 newRow.splice(i + 1, 1)
                 
@@ -221,8 +222,9 @@ function getColor(gridValue) {
                     lastTile = currentTile; 
                 } else if (currentTile === lastTile) { 
                     
-                    gridSize[(writeIndex - 1) * size + col] *= 2;  
-                    points += gridSize[(writeIndex - 1) * size + col] *= 2;
+                   // gridSize[(writeIndex - 1) * size + col] *= 2;  
+                   points += gridSize[(writeIndex - 1) * size + col] *= 2;
+                  // points += (value/2)
                     gridSize[row * size + col] = null; 
                     lastTile = undefined;  
                 }
@@ -261,7 +263,7 @@ function mergeDown() {
                     lastTile = currentTile 
                 } else if (currentTile === lastTile) { 
                    
-                    gridSize[(writeIndex + 1) * size + col] *= 2;
+                    //gridSize[(writeIndex + 1) * size + col] *= 2;
                     points += gridSize[(writeIndex + 1) * size + col] *= 2;
                     gridSize[row * size + col] = null
                     lastTile = undefined  
@@ -333,7 +335,7 @@ function makeMove() {
 
         
     } else {
-        console.log("Игра продолжается!");
+       // console.log("Игра продолжается!");
     }
    // console.log(gridSize)
 }
