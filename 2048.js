@@ -10,6 +10,7 @@ gridSize.length = playingFieldSize ** 2;
 gridSize.fill(null);
 
 let score = 0;
+let keyPressed = false;
 
 
 function startGame() {
@@ -19,77 +20,6 @@ function startGame() {
     showTile();
 }
 
-// function showGrid() {
-// context.clearRect(0, 0, 400, 400);
-// for (let i = 0; i < gridSize.length; i += 1) {
-//     const x = (i % playingFieldSize) * tileSize; 
-//     const y = Math.floor(i / playingFieldSize) * tileSize; 
-
-//     showTile(x, y, gridSize[i]);
-
-//     };
-// };
-
-
-
-// function showTile(x, y, gridValue) {
-
-//     context.strokeRect(x, y, tileSize, tileSize);
-
-//     context.fillStyle = '#cdc1b4'
-
-//     if (gridValue) {
-        
-//         context.strokeStyle = 'black';
-//         context.font = 'bold 36px Arial';
-//         context.textAlign = 'center';
-//         context.textBaseLine = 'middle';
-//         context.fillText(gridValue, x + tileSize / 2, y + tileSize / 2);
-//     };
- 
-// };
-
-// //console.log(gridSize)
-// function createNewTile() {
-//     let emptyTiles = [];
-//     min = 0;
-//     max = gridSize.length;
-
-//     for (let i = 0; i < gridSize.length; i += 1 ) {
-//         if (gridSize[i] === null) {
-//             emptyTiles.push(i)
-//         };
-//     };
-
-//     if (emptyTiles.length > 0) {
-//         const randomTile = Math.floor(Math.random() * (max - min) - min);
-//         const randomTilePosition = emptyTiles[randomTile];
-//         console.log(randomTilePosition)
-//         gridSize[randomTilePosition] = Math.random() < 0.9 ? 2 : 4;
-    
-//     };
-    
-    
-// };
-
-
-
-// function getColor(gridValue) {
-//     switch (gridValue) {
-//         case 2: return '#eee4da';
-//         case 4: return '#ede0c8';
-//         case 8: return '#f2b179';
-//         case 16: return '#f59563';
-//         case 32: return '#f67c5f';
-//         case 64: return '#f67c5f';
-//         case 128: return '#f9f38e';
-//         case 256: return '#edcf72';
-//         case 512: return '#edcc61';
-//         case 1024: return '#edc850';
-//         case 2048: return '#edc53f';
-//         default: return '#c2b3a0';
-//     }
-// }
 
 function createNewTile() {
     let emptyTiles = gridSize.reduce((acc, curr, index) => {
@@ -146,6 +76,7 @@ function getColor(gridValue) {
 
   function mergeLeft() {
     points = 0
+    const prevState = [...gridSize];
     for(let row = 0; row < 4; row++) {
        let startInd = row * 4
        let currentRow = gridSize.slice(startInd, startInd + 4)
@@ -162,19 +93,23 @@ function getColor(gridValue) {
            gridSize[startInd + i] = newRow[i] || null 
         }
       }
-      makeMove()
-      createNewTile()
-      showGrid()
-      win()
-      updateScore(points)
-  //  return gridSize
-    
+        if (JSON.stringify(prevState) !== JSON.stringify(gridSize)) {
+        makeMove();
+        createNewTile(); 
+        showGrid();
+        win();
+        updateScore(points);
+    } else {
+        showGrid();
+        makeMove()
+    }
+
     }
 
      function mergeRight() {
         points = 0
+        const prevState = [...gridSize];
     for(let row = 0; row < 4; row++) {
-      
        let startInd = row * 4
        let currentRow = gridSize.slice(startInd, startInd + 4)
        let newRow = currentRow.filter(value => value !== null)
@@ -198,16 +133,22 @@ function getColor(gridValue) {
         }
         
       }
-      makeMove()
-    createNewTile()
-    showGrid()
-    win()
-    updateScore(points)
+      if (JSON.stringify(prevState) !== JSON.stringify(gridSize)) {
+        makeMove();
+        createNewTile(); 
+        showGrid();
+        win();
+        updateScore(points);
+    } else {
+        showGrid();
+        makeMove()
+    }
     }
 
 
       function mergeUp() {
         let points = 0
+        const prevState = [...gridSize];
        const size = 4; 
     for (let col = 0; col < size; col++) {
         let writeIndex = 0; 
@@ -235,19 +176,21 @@ function getColor(gridValue) {
             gridSize[i * size + col] = null;
         }
     }
-    makeMove()
-     createNewTile()
-    showGrid()
-    win()
-    updateScore(points)
-//console.log(gridSize)
-//scoreGame()
- 
-   // return gridSize 
+   if (JSON.stringify(prevState) !== JSON.stringify(gridSize)) {
+        makeMove();
+        createNewTile(); 
+        showGrid();
+        win();
+        updateScore(points);
+    } else {
+        showGrid();
+        makeMove()
+    }
 }
 
 function mergeDown() {
     points = 0
+    const prevState = [...gridSize];
     const size = 4; 
     for (let col = 0; col < size; col++) {
         let writeIndex = size - 1; 
@@ -276,35 +219,44 @@ function mergeDown() {
             gridSize[i * size + col] = null
         }
     }
-makeMove()
-    createNewTile()
-    showGrid()
-    win()
-    updateScore(points)
-    //return gridSize
+    if (JSON.stringify(prevState) !== JSON.stringify(gridSize)) {
+        makeMove();
+        createNewTile(); 
+        showGrid();
+        win();
+        updateScore(points);
+    } else {
+        showGrid();
+        makeMove()
+    }
 }
    
-document.addEventListener('keydown', (event) => {
-    const key = event.key;
-    switch (key) {
-        case 'ArrowUp': mergeUp(); break;
-        case 'ArrowDown': mergeDown(); break;
-        case 'ArrowLeft': mergeLeft(); break;
-        case 'ArrowRight': mergeRight(); break;
+window.addEventListener('keydown', function(event) {
+    if (!keyPressed) {
+        switch (event.key) {
+            case 'ArrowUp':
+                mergeUp();
+                break;
+            case 'ArrowDown':
+                mergeDown();
+                break;
+            case 'ArrowLeft':
+                mergeLeft();
+                break;
+            case 'ArrowRight':
+                mergeRight();
+                break;
+            default:
+                return; 
+        }
+        keyPressed = true; 
     }
 });
 
-// const score = document.querySelector('.score')
-// function scoreGame() {
-//     const value = document.querySelector('.value')
-//     let newValue = gridSize.reduce((acc, curr) => acc + curr)
-//    let p = document.createElement('p')
-//    p.innerHTML = newValue
-//   //value = x
-//    score.appendChild(p)
-   
+window.addEventListener('keyup', function(event) {
+    keyPressed = false; 
+});
 
-// }
  
 startGame();
 
@@ -339,6 +291,7 @@ function makeMove() {
     }
    // console.log(gridSize)
 }
+makeMove()
 
 const tryAgain = document.querySelector('.tryAgain')
 tryAgain.addEventListener('click', (e) => {
